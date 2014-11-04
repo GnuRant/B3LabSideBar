@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		8151BF701A092427004A8C44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF6F1A092427004A8C44 /* AppDelegate.swift */; };
-		8151BF721A092427004A8C44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF711A092427004A8C44 /* ViewController.swift */; };
 		8151BF751A092427004A8C44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8151BF731A092427004A8C44 /* Main.storyboard */; };
 		8151BF771A092427004A8C44 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8151BF761A092427004A8C44 /* Images.xcassets */; };
 		8151BF7A1A092427004A8C44 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8151BF781A092427004A8C44 /* LaunchScreen.xib */; };
 		8151BF861A092427004A8C44 /* SideBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF851A092427004A8C44 /* SideBarControllerTests.swift */; };
+		8151BF911A092477004A8C44 /* B3LabSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF901A092477004A8C44 /* B3LabSideBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +29,13 @@
 		8151BF6A1A092427004A8C44 /* SideBarController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideBarController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8151BF6E1A092427004A8C44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8151BF6F1A092427004A8C44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8151BF711A092427004A8C44 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8151BF741A092427004A8C44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8151BF761A092427004A8C44 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8151BF791A092427004A8C44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8151BF7F1A092427004A8C44 /* SideBarControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SideBarControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8151BF841A092427004A8C44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8151BF851A092427004A8C44 /* SideBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarControllerTests.swift; sourceTree = "<group>"; };
+		8151BF901A092477004A8C44 /* B3LabSideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = B3LabSideBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,8 +77,8 @@
 		8151BF6C1A092427004A8C44 /* SideBarController */ = {
 			isa = PBXGroup;
 			children = (
+				8151BF8F1A092457004A8C44 /* B3LabSideBarController */,
 				8151BF6F1A092427004A8C44 /* AppDelegate.swift */,
-				8151BF711A092427004A8C44 /* ViewController.swift */,
 				8151BF731A092427004A8C44 /* Main.storyboard */,
 				8151BF761A092427004A8C44 /* Images.xcassets */,
 				8151BF781A092427004A8C44 /* LaunchScreen.xib */,
@@ -110,6 +110,14 @@
 				8151BF841A092427004A8C44 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8151BF8F1A092457004A8C44 /* B3LabSideBarController */ = {
+			isa = PBXGroup;
+			children = (
+				8151BF901A092477004A8C44 /* B3LabSideBarViewController.swift */,
+			);
+			name = B3LabSideBarController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,7 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8151BF721A092427004A8C44 /* ViewController.swift in Sources */,
+				8151BF911A092477004A8C44 /* B3LabSideBarViewController.swift in Sources */,
 				8151BF701A092427004A8C44 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
