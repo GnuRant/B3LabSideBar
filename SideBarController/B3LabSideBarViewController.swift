@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 
 class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let controllers: [UIViewController]?
-    let subviewContainer: UIViewController?
+    var controllers: [AnyObject]!
     let sideBar: UITableView?
     
     var sideBarIndex: Int = 0
@@ -37,7 +36,6 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.whiteColor()
         
         if(sideBar != nil){
             self.setUpSideBar()
@@ -53,17 +51,63 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
         sideBar?.frame = setTableViewSize()
     }
     
+    //The array of custom view controllers to display in the left side bar interface,
+    //the order in the array corresponds to the display order in the side bar, with
+    //the controller at index 0 rappresenting the top-most element in the side bar,
+    //the controller at index 1 the below element in the side bar controller.
+    func setViewControllers(viewController:[AnyObject]) {
+        for controller in viewController{
+            if (controller as? UIViewController == nil) {
+                print("Error viewController doesn't contain UIViewController")
+                return
+            }
+        }
+        
+        controllers = viewController
+        self.setDefaultSubViewController()
+    }
+    
+    
     ////////////////////////////////////////////////////////////////////////////
     ////////////////// SUBVIEWCONTROLLER UTILITY METHODS ///////////////////////
     
-    func setSubviewControllerSize() -> CGRect {
+    func setContainerControllerSize() -> CGRect {
         return CGRectMake(B3LabSideBarCostants().SIDEBAR_WIDTH, 0,
             self.view.frame.width - B3LabSideBarCostants().SIDEBAR_WIDTH,
             self.view.frame.height)
     }
     
-    func loadViewControllerInSubviewContainer() -> Bool {
+    func replaceVisibleViewControllerWithViewControllerAtIndex(index: Int) -> Bool {
+        if index == self.sideBarIndex {
+            return false
+        }else{
+            var incommingViewController = controllers[index] as UIViewController
+            var outcommingViewController = controllers[sideBarIndex] as UIViewController
+            
+            outcommingViewController.willMoveToParentViewController(nil)
+            self.addChildViewController(incommingViewController)
+            
+            //set correct frame for incomming view
+            incommingViewController.view.frame = setContainerControllerSize()
+            incommingViewController.didMoveToParentViewController(self)
+            
+            self.view.addSubview(incommingViewController.view)
+            
+            //remove outcommingview controller from superview
+            outcommingViewController.removeFromParentViewController()
+            
+            self.sideBarIndex = index
+        }
+        
         return true
+    }
+    
+    func setDefaultSubViewController(){
+        var tempVc = controllers[0] as UIViewController
+        self.addChildViewController(tempVc)
+        tempVc.view.frame = setContainerControllerSize()
+        tempVc.didMoveToParentViewController(self)
+        self.view.addSubview(tempVc.view)
     }
     
     ////////////////////////////////////////////////////////////////////////////
@@ -86,7 +130,7 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     ///////////////////// TABLEVIEW DELEGATES METHODS //////////////////////////
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -99,7 +143,7 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.sideBarIndex = indexPath.item
+        self.replaceVisibleViewControllerWithViewControllerAtIndex(indexPath.row)
     }
     
 }
