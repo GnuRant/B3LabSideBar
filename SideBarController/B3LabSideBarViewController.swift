@@ -46,6 +46,7 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
             self.setUpSideBar()
             sideBar!.delegate = self
             sideBar!.dataSource = self
+            sideBar?.registerNib(UINib(nibName: "B3LabSideBarCell", bundle: nil), forCellReuseIdentifier: "B3LabCell")
             self.view.addSubview(sideBar!)
         }else{
             print("Error: sideBar is not initialized")
@@ -141,10 +142,10 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //TODO: Debug code
-        var cell: UITableViewCell = UITableViewCell(frame: CGRectMake(0, 0, 120, 120))
+        let cell = tableView.dequeueReusableCellWithIdentifier("B3LabCell", forIndexPath: indexPath) as B3LabSideBarCell
         
-        cell.backgroundColor = UIColor.redColor()
+        cell.icon.backgroundColor = UIColor.redColor()
+        cell.iconText.text = "Costa"
         
         return cell
     }
