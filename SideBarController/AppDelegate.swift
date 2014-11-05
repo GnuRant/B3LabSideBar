@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let windows: UIWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
-        var rootViewController = B3LabSideBarViewController(nibName: nil, bundle: nil)
+        
         
         
         //DEBUG
@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var controller1: UIViewController = UIViewController()
         controller1.view.backgroundColor = UIColor.blueColor()
         
+        var rootViewController = B3LabSideBarViewController(nibName: nil, bundle: nil)
         rootViewController.setViewControllers([controller1, nav])
-        
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
         

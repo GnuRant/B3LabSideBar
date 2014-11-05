@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var controllers: [AnyObject]!
+    var controllers: [AnyObject]! = []
     let sideBar: UITableView?
     
     var sideBarIndex: Int = 0
@@ -31,6 +31,11 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         super.init(nibName: nil, bundle: nil)
         sideBar = UITableView()
+    }
+    
+    init(controllers arrayViewControllers:[AnyObject]) {
+        super.init()
+        setViewControllers(arrayViewControllers)
     }
     
 
@@ -55,16 +60,19 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     //the order in the array corresponds to the display order in the side bar, with
     //the controller at index 0 rappresenting the top-most element in the side bar,
     //the controller at index 1 the below element in the side bar controller.
-    func setViewControllers(viewController:[AnyObject]) {
-        for controller in viewController{
+    func setViewControllers(viewControllers:[AnyObject]) {
+        for controller in viewControllers{
             if (controller as? UIViewController == nil) {
-                print("Error viewController doesn't contain UIViewController")
+                print("Error viewController doesn't contain UIViewControllers")
                 return
             }
         }
         
-        controllers = viewController
-        self.setDefaultSubViewController()
+        controllers = viewControllers
+        
+        if !viewControllers.isEmpty {
+            setDefaultSubViewController()
+        }
     }
     
     
@@ -121,7 +129,6 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setTableViewSize() -> CGRect {
-        //TODO: Set tablet variables as costants
         return CGRectMake(0, B3LabSideBarCostants().SIDEBAR_TOP_BORDER,
             B3LabSideBarCostants().SIDEBAR_WIDTH, self.view.frame.height)
     }
@@ -130,7 +137,7 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
     ///////////////////// TABLEVIEW DELEGATES METHODS //////////////////////////
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return controllers.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
