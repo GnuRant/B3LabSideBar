@@ -14,7 +14,6 @@
 		8151BF861A092427004A8C44 /* SideBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF851A092427004A8C44 /* SideBarControllerTests.swift */; };
 		8151BF911A092477004A8C44 /* B3LabSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF901A092477004A8C44 /* B3LabSideBarViewController.swift */; };
 		8151BF931A0A3520004A8C44 /* B3LabSideBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151BF921A0A3520004A8C44 /* B3LabSideBarCell.swift */; };
-		8151BF971A0A37B7004A8C44 /* B3LabSideBarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8151BF961A0A37B7004A8C44 /* B3LabSideBarCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +38,6 @@
 		8151BF851A092427004A8C44 /* SideBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarControllerTests.swift; sourceTree = "<group>"; };
 		8151BF901A092477004A8C44 /* B3LabSideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = B3LabSideBarViewController.swift; sourceTree = "<group>"; };
 		8151BF921A0A3520004A8C44 /* B3LabSideBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = B3LabSideBarCell.swift; sourceTree = "<group>"; };
-		8151BF961A0A37B7004A8C44 /* B3LabSideBarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = B3LabSideBarCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +119,6 @@
 			children = (
 				8151BF901A092477004A8C44 /* B3LabSideBarViewController.swift */,
 				8151BF921A0A3520004A8C44 /* B3LabSideBarCell.swift */,
-				8151BF961A0A37B7004A8C44 /* B3LabSideBarCell.xib */,
 			);
 			name = B3LabSideBarController;
 			sourceTree = "<group>";
@@ -209,7 +206,6 @@
 				8151BF751A092427004A8C44 /* Main.storyboard in Resources */,
 				8151BF7A1A092427004A8C44 /* LaunchScreen.xib in Resources */,
 				8151BF771A092427004A8C44 /* Images.xcassets in Resources */,
-				8151BF971A0A37B7004A8C44 /* B3LabSideBarCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,21 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
         let windows: UIWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        
-        
         //DEBUG
-        var controller: UIViewController = UIViewController()
-        controller.title = "Prova"
-        controller.view.backgroundColor = UIColor.orangeColor()
-        var nav: UINavigationController = UINavigationController(rootViewController: controller)
         var controller1: UIViewController = UIViewController()
+        controller1.view.backgroundColor = UIColor.orangeColor()
+
+        var controller2: UIViewController = UIViewController()
         controller1.view.backgroundColor = UIColor.blueColor()
         
-        var rootViewController = B3LabSideBarViewController(nibName: nil, bundle: nil)
-        rootViewController.setViewControllers([controller1, nav])
+        var rootViewController = B3LabSideBarViewController()
+        rootViewController.controllers = [controller1, controller1]
+        rootViewController.titles = ["Controller 1", "Controller 2"]
+        
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
         

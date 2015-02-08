@@ -10,22 +10,43 @@ import Foundation
 import UIKit
 
 class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var controllers: [AnyObject]! = []
-    let sideBar: UITableView?
+   
+
+    private let kSidebarWidth: CGFloat = 90
+    private let kSidebarTopBorder: CGFloat = 10
+    private let kSidebarCellId = "B3LabCell"
+    private let kSidebarCellHeight: CGFloat = 90
+    private let kSettingCellId = "SettingsCellID"
+    private let kSidebarBackgroundColor = UIColor(red: 0.208, green: 0.208, blue: 0.208, alpha: 1)
     
-    var sideBarIndex: Int = 0
-    
-    struct B3LabSideBarCostants {
-        let SIDEBAR_WIDTH:CGFloat = 120
-        let SIDEBAR_TOP_BORDER: CGFloat = 80
+    var controllers: [AnyObject] = [] {
+        didSet {
+            setViewControllers(controllers)
+            sideBar.reloadData()
+        }
     }
     
+    var titles: [String] = [] {
+        didSet {
+            sideBar.reloadData()
+        }
+    }
+    var icons: [UIImage] = [] {
+        didSet {
+           sideBar.reloadData()
+        }
+    }
     
-    ////////////////////////////////////////////////////////////////////////////
-    /////////////////// UIVIEWCONTROLLER FILECYCLE METHODS /////////////////////
+    private let sideBar: UITableView = UITableView()
+    private var settingsButtonCell: UIView?
+    private var settings: UIViewController?
     
+    private var sideBarIndex: Int = 0
+    
+    //MARK: ViewController Init methods
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        sideBar = UITableView()
     }
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
@@ -33,60 +54,61 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
         sideBar = UITableView()
     }
     
-    init(controllers arrayViewControllers:[AnyObject]) {
+    override init() {
         super.init()
-        setViewControllers(arrayViewControllers)
     }
     
-
+    //MARK: ViewController lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(sideBar != nil){
-            self.setUpSideBar()
-            sideBar!.delegate = self
-            sideBar!.dataSource = self
-            sideBar?.registerNib(UINib(nibName: "B3LabSideBarCell", bundle: nil), forCellReuseIdentifier: "B3LabCell")
-            self.view.addSubview(sideBar!)
-        }else{
-            print("Error: sideBar is not initialized")
-        }
+        sideBar.delegate = self
+        sideBar.dataSource = self
+        sideBar.registerClass(B3LabSideBarCell.self, forCellReuseIdentifier: kSidebarCellId)
+        setUpSideBarStyle()
+            
+        self.view.addSubview(sideBar)
+
+        settingsButtonCell = B3LabSideBarCell(style: .Default, reuseIdentifier: kSettingCellId)
+        settingsButtonCell?.frame = CGRect(x: 0,
+            y: self.view.frame.height - kSidebarCellHeight,
+            width: kSidebarCellHeight,
+            height: kSidebarCellHeight)
+        (settingsButtonCell as B3LabSideBarCell).title = "settings"
+        let tap = UITapGestureRecognizer(target: self, action: "didTapOnSettingsButton")
+        settingsButtonCell?.addGestureRecognizer(tap)
+        self.view.addSubview(settingsButtonCell!)
     }
     
     override func viewWillAppear(animated: Bool) {
-        sideBar?.frame = setTableViewSize()
+        sideBar.frame = setTableViewSize()
     }
     
     //The array of custom view controllers to display in the left side bar interface,
     //the order in the array corresponds to the display order in the side bar, with
     //the controller at index 0 rappresenting the top-most element in the side bar,
     //the controller at index 1 the below element in the side bar controller.
-    func setViewControllers(viewControllers:[AnyObject]) {
+    private func setViewControllers(viewControllers:[AnyObject]) {
         for controller in viewControllers{
             if (controller as? UIViewController == nil) {
-                print("Error viewController doesn't contain UIViewControllers")
+                println("Error viewController doesn't contain UIViewControllers")
                 return
             }
         }
-        
-        controllers = viewControllers
         
         if !viewControllers.isEmpty {
             setDefaultSubViewController()
         }
     }
     
-    
-    ////////////////////////////////////////////////////////////////////////////
-    ////////////////// SUBVIEWCONTROLLER UTILITY METHODS ///////////////////////
-    
-    func setContainerControllerSize() -> CGRect {
-        return CGRectMake(B3LabSideBarCostants().SIDEBAR_WIDTH, 0,
-            self.view.frame.width - B3LabSideBarCostants().SIDEBAR_WIDTH,
+    //MARK: Sub view controller utility methods
+    private func setContainerControllerSize() -> CGRect {
+        return CGRectMake(kSidebarWidth, 0,
+            self.view.frame.width - kSidebarWidth,
             self.view.frame.height)
     }
     
-    func replaceVisibleViewControllerWithViewControllerAtIndex(index: Int) -> Bool {
+    private func replaceVisibleViewControllerWithViewControllerAtIndex(index: Int) -> Bool {
         if index == self.sideBarIndex {
             return false
         }else{
@@ -111,7 +133,7 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
         return true
     }
     
-    func setDefaultSubViewController(){
+    private func setDefaultSubViewController(){
         var tempVc = controllers[0] as UIViewController
         self.addChildViewController(tempVc)
         tempVc.view.frame = setContainerControllerSize()
@@ -119,33 +141,39 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
         self.view.addSubview(tempVc.view)
     }
     
-    ////////////////////////////////////////////////////////////////////////////
-    /////////////////////// TABLEVIEW UTILITY METHODS //////////////////////////
-    
-    func setUpSideBar(){
-        sideBar!.autoresizingMask = (UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleRightMargin)
-        sideBar!.backgroundColor = UIColor.grayColor()
-        sideBar!.scrollEnabled = false
-        sideBar!.separatorStyle = UITableViewCellSeparatorStyle.None
+
+    //MARK: TableView utility methods
+    private func setUpSideBarStyle(){
+        sideBar.autoresizingMask = (UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleRightMargin)
+        sideBar.backgroundColor = kSidebarBackgroundColor
+        sideBar.scrollEnabled = false
+        sideBar.separatorStyle = UITableViewCellSeparatorStyle.None
     }
     
-    func setTableViewSize() -> CGRect {
-        return CGRectMake(0, B3LabSideBarCostants().SIDEBAR_TOP_BORDER,
-            B3LabSideBarCostants().SIDEBAR_WIDTH, self.view.frame.height)
+    private func setTableViewSize() -> CGRect {
+        return CGRectMake(0,
+            kSidebarTopBorder,
+            kSidebarWidth,
+            self.view.frame.height - kSidebarTopBorder - kSidebarCellHeight)
     }
     
-    ////////////////////////////////////////////////////////////////////////////
-    ///////////////////// TABLEVIEW DELEGATES METHODS //////////////////////////
-    
+
+    //MARK: TableView delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return controllers.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("B3LabCell", forIndexPath: indexPath) as B3LabSideBarCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kSidebarCellId)
+            as B3LabSideBarCell
         
-        cell.icon.backgroundColor = UIColor.redColor()
-        cell.iconText.text = "Costa"
+        if  controllers.count <= titles.count  {
+            cell.title = titles[indexPath.row]
+        }
+        
+        if  controllers.count <= icons.count {
+            cell.icon = icons[indexPath.row]
+        }
         
         return cell
     }
@@ -154,4 +182,16 @@ class B3LabSideBarViewController: UIViewController, UITableViewDelegate, UITable
         self.replaceVisibleViewControllerWithViewControllerAtIndex(indexPath.row)
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return kSidebarCellHeight
+    }
+    
+    //MARK: Methods for gesture actions
+    func didTapOnSettingsButton() {
+        if settings !== nil {
+            var navController = UINavigationController(rootViewController: settings!)
+            navController.modalPresentationStyle = .FormSheet
+            self.presentViewController(navController, animated: true, completion: nil)
+        }
+    }
 }
